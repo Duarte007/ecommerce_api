@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "target": "ES2019",
+    "strictNullChecks": true,
+    "noImplicitAny": true,
+    // "strictFunctionTypes": true,
+    "noImplicitThis": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "build/",
+    "baseUrl": ".",
+    "lib": ["ES2019"],
+    "types": ["@types/node", "@types/jest"],
+    "typeRoots": ["node_modules/@types", "@types"]
+  },
+  "exclude": ["__tests__"],
+  "include": ["src"]
+}
