@@ -19,17 +19,30 @@ class Product {
       });
   };
 
-  public post = (products: IProduct[]) => {
+  public post = (products: IProduct[]): Promise<number> => {
     return connection
       .insert(products)
+      .onConflict("sku")
+      .ignore()
       .into("product")
       .then((result) => {
         console.log(result);
+        return result[0] || 0;
       })
       .catch((err) => {
         console.log("Error when tryng insert product.");
         console.log(err);
+        return Promise.reject({ err });
       });
+  };
+
+  public getProductIdBySku = (sku: string): Promise<number> => {
+    return connection
+      .select("id")
+      .from("product")
+      .where("sku", sku)
+      .then((response: { id: number }[]) => response[0]?.id)
+      .catch((err) => Promise.reject({ err }));
   };
 }
 

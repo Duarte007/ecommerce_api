@@ -1,40 +1,40 @@
 export interface IOrderParams {
-  id: number;
-  idWeb: number;
-  date: string;
-  iniDate: string;
-  endDate: string;
-  channel: number;
+  id?: number;
+  idWeb?: number;
+  date?: string;
+  iniDate?: string;
+  endDate?: string;
+  channel?: number;
 }
 
 export interface IOrder {
-  id: number;
+  id?: number;
   idWeb: number;
   status: number;
   amount: number;
   discount: number;
   freight: number;
   channel: number;
-  orderDate: string;
+  date: string;
   remarks: string;
   customerId: number;
-  sku: string;
-  productName: string;
+}
+export interface IOrderProduct {
+  orderId: number;
+  productId: number;
   qtty: number;
   price: number;
-  brand: string;
-  method: string;
+  brandId: number;
+}
+
+export interface IOrderPayment {
+  orderId: number;
+  paymentId: string;
   installments: number;
-  customerName: string;
-  cpfCnpj: number;
-  cell: string;
-  email: string;
-  address: string;
-  zip: number;
-  number: number;
-  street: string;
-  district: string;
-  state: string;
-  country: string;
+}
+
+export interface IOrderDelivery {
+  orderId: number;
+  ctAddId: number;
   deliveryDate: string;
 }

@@ -8,17 +8,26 @@ class User {
       .from("user")
       .where((builder: Knex.QueryBuilder): void => {
         if (data.user) {
-          builder.where("userapi.login", data.user);
+          builder.where("login", data.user);
         }
         if (data.password) {
-          builder.whereRaw("userapi.password = MD5(SHA1(?)) ", [
-            `${data.password}`,
-          ]);
+          builder.whereRaw("password = MD5(SHA1(?)) ", [`${data.password}`]);
         }
       })
       .catch(async (err: Error) => {
         return Promise.reject({
-          msg: "Erro ao obter informações do usuário!",
+          msg: "Error to get user!",
+          error: { ...err },
+        });
+      });
+  };
+
+  public post = async (user: IUser): Promise<number[]> => {
+    return connection
+      .raw(`INSERT INTO user (login, password) VALUES ('${user.login}', MD5(SHA1('${user.password}')));`)
+      .catch(async (err: Error) => {
+        return Promise.reject({
+          msg: "Error to set user!",
           error: { ...err },
         });
       });

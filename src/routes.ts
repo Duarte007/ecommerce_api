@@ -27,6 +27,6 @@ routes.post("/customer", CustomerController.post);
 routes.get("/customer", CustomerController.get);
 
 routes.post("/user", UserController.post);
-routes.get("/user", UserController.get);
+// routes.get("/user", UserController.get);
 
 export default routes;

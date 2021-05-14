@@ -21,7 +21,7 @@ class Dump {
       "`remarks` varchar(255) NOT NULL DEFAULT ''," +
       "`customerId` int(11) NOT NULL DEFAULT 0," +
       "PRIMARY KEY (`id`)," +
-      "CONSTRAINT `fk_customerId` FOREIGN KEY (`customerId`) REFERENCES `customer`(`id`)," +
+      "CONSTRAINT `fk_customerId` FOREIGN KEY (`customerId`) REFERENCES `customer`(`id`) ON DELETE CASCADE," +
       "KEY i2(`idWeb`, `date`)," +
       "KEY i3(`date`)," +
       "KEY i4(`status`)" +
@@ -35,8 +35,8 @@ class Dump {
       "`price` double(6,3) NOT NULL DEFAULT 0," +
       "`brandId` int(11) NOT NULL DEFAULT 0," +
       "PRIMARY KEY (`id`)," +
-      "CONSTRAINT `fk_orderId_orderProduct` FOREIGN KEY (`orderId`) REFERENCES `order`(`id`)," +
-      "CONSTRAINT `fk_productId_orderProduct` FOREIGN KEY (`productId`) REFERENCES `product`(`id`)," +
+      "CONSTRAINT `fk_orderId_orderProduct` FOREIGN KEY (`orderId`) REFERENCES `order`(`id`) ON DELETE CASCADE," +
+      "CONSTRAINT `fk_productId_orderProduct` FOREIGN KEY (`productId`) REFERENCES `product`(`id`) ON DELETE CASCADE," +
       "KEY i2 (`orderId`)" +
       ") ENGINE=InnoDB DEFAULT CHARSET=latin1;";
     const orderPayment =
@@ -46,8 +46,8 @@ class Dump {
       "`paymentId` int(11) NOT NULL," +
       "`installments` int(10) NOT NULL DEFAULT 1," +
       "PRIMARY KEY (`id`)," +
-      "CONSTRAINT `fk_orderId_orderPayment` FOREIGN KEY (`orderId`) REFERENCES `order`(`id`)," +
-      "CONSTRAINT `fk_paymentId_orderPayment` FOREIGN KEY (`paymentId`) REFERENCES `payment`(`id`)," +
+      "CONSTRAINT `fk_orderId_orderPayment` FOREIGN KEY (`orderId`) REFERENCES `order`(`id`) ON DELETE CASCADE," +
+      "CONSTRAINT `fk_paymentId_orderPayment` FOREIGN KEY (`paymentId`) REFERENCES `payment`(`id`) ON DELETE CASCADE," +
       "KEY i2 (`orderId`)" +
       ") ENGINE=InnoDB DEFAULT CHARSET=latin1;";
     const orderDelivery =
@@ -57,8 +57,8 @@ class Dump {
       "`ctAddId` int(11) NOT NULL," +
       "`deliveryDate` date," +
       "PRIMARY KEY (`id`)," +
-      "CONSTRAINT `fk_orderId_orderDelivery` FOREIGN KEY (`orderId`) REFERENCES `order`(`id`)," +
-      "CONSTRAINT `fk_ctAddId_orderDelivery` FOREIGN KEY (`ctAddId`) REFERENCES `customerAddress`(`id`)," +
+      "CONSTRAINT `fk_orderId_orderDelivery` FOREIGN KEY (`orderId`) REFERENCES `order`(`id`) ON DELETE CASCADE," +
+      "CONSTRAINT `fk_ctAddId_orderDelivery` FOREIGN KEY (`ctAddId`) REFERENCES `customerAddress`(`id`) ON DELETE CASCADE," +
       "KEY i2 (`orderId`)" +
       ") ENGINE=InnoDB DEFAULT CHARSET=latin1;";
     const product =
@@ -71,6 +71,7 @@ class Dump {
       "`brandId` int(5) NOT NULL DEFAULT 0," +
       "`stock` int(5) NOT NULL DEFAULT 0," +
       "PRIMARY KEY (`id`)," +
+      "UNIQUE (`sku`)," +
       "KEY i2 (`sku`)" +
       ") ENGINE=InnoDB DEFAULT CHARSET=latin1;";
     const customer =
@@ -78,7 +79,7 @@ class Dump {
       "`id` int(11) NOT NULL AUTO_INCREMENT," +
       "`name` varchar(60) NOT NULL DEFAULT ''," +
       "`companyName` varchar(60) NOT NULL DEFAULT ''," +
-      "`cpfCnpj` int(14) NOT NULL DEFAULT 0," +
+      "`cpfCnpj` varchar(14) NOT NULL DEFAULT '0'," +
       "`rg` int(10) NOT NULL DEFAULT 0," +
       "`email` varchar(60) NOT NULL DEFAULT ''," +
       "`phone` char(12) NOT NULL DEFAULT ''," +
@@ -94,7 +95,6 @@ class Dump {
       "CREATE TABLE `customerAddress` (" +
       "`id` int(11) NOT NULL AUTO_INCREMENT," +
       "`customerId` int(11) NOT NULL," +
-      "`address` varchar(60) NOT NULL," +
       "`zip` int(10) NOT NULL DEFAULT 0," +
       "`number` int(5) NOT NULL DEFAULT 0," +
       "`street` varchar(60) NOT NULL," +
@@ -102,7 +102,7 @@ class Dump {
       "`state` varchar(10) NOT NULL," +
       "`country` varchar(20) NOT NULL," +
       "PRIMARY KEY (`id`)," +
-      "CONSTRAINT `fk_customerId_customerAddress` FOREIGN KEY (`customerId`) REFERENCES `customer`(`id`)," +
+      "CONSTRAINT `fk_customerId_customerAddress` FOREIGN KEY (`customerId`) REFERENCES `customer`(`id`) ON DELETE CASCADE," +
       "KEY i2 (`customerId`)" +
       ") ENGINE=InnoDB DEFAULT CHARSET=utf8";
     const user =
@@ -120,68 +120,52 @@ class Dump {
         return;
       })
       .then(async () => {
-        return connection.schema
-          .hasTable("customerAddress")
-          .then(async (exists: boolean) => {
-            if (!exists) return connection.schema.raw(customerAddress);
-            return;
-          });
+        return connection.schema.hasTable("customerAddress").then(async (exists: boolean) => {
+          if (!exists) return connection.schema.raw(customerAddress);
+          return;
+        });
       })
       .then(async () => {
-        return connection.schema
-          .hasTable("order")
-          .then(async (exists: boolean) => {
-            if (!exists) return connection.schema.raw(order);
-            return;
-          });
+        return connection.schema.hasTable("order").then(async (exists: boolean) => {
+          if (!exists) return connection.schema.raw(order);
+          return;
+        });
       })
       .then(async () => {
-        return connection.schema
-          .hasTable("product")
-          .then(async (exists: boolean) => {
-            if (!exists) return connection.schema.raw(product);
-            return;
-          });
+        return connection.schema.hasTable("product").then(async (exists: boolean) => {
+          if (!exists) return connection.schema.raw(product);
+          return;
+        });
       })
       .then(async () => {
-        return connection.schema
-          .hasTable("orderProduct")
-          .then(async (exists: boolean) => {
-            if (!exists) return connection.schema.raw(orderProduct);
-            return;
-          });
+        return connection.schema.hasTable("orderProduct").then(async (exists: boolean) => {
+          if (!exists) return connection.schema.raw(orderProduct);
+          return;
+        });
       })
       .then(async () => {
-        return connection.schema
-          .hasTable("payment")
-          .then(async (exists: boolean) => {
-            if (!exists) return connection.schema.raw(payment);
-            return;
-          });
+        return connection.schema.hasTable("payment").then(async (exists: boolean) => {
+          if (!exists) return connection.schema.raw(payment);
+          return;
+        });
       })
       .then(async () => {
-        return connection.schema
-          .hasTable("orderPayment")
-          .then(async (exists: boolean) => {
-            if (!exists) return connection.schema.raw(orderPayment);
-            return;
-          });
+        return connection.schema.hasTable("orderPayment").then(async (exists: boolean) => {
+          if (!exists) return connection.schema.raw(orderPayment);
+          return;
+        });
       })
       .then(async () => {
-        return connection.schema
-          .hasTable("orderDelivery")
-          .then(async (exists: boolean) => {
-            if (!exists) return connection.schema.raw(orderDelivery);
-            return;
-          });
+        return connection.schema.hasTable("orderDelivery").then(async (exists: boolean) => {
+          if (!exists) return connection.schema.raw(orderDelivery);
+          return;
+        });
       })
       .then(async () => {
-        return connection.schema
-          .hasTable("user")
-          .then(async (exists: boolean) => {
-            if (!exists) return connection.schema.raw(user);
-            return;
-          });
+        return connection.schema.hasTable("user").then(async (exists: boolean) => {
+          if (!exists) return connection.schema.raw(user);
+          return;
+        });
       })
       .then(async () => {
         console.log("Table verification completed!");
