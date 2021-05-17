@@ -6,337 +6,385 @@
 	},
 	"item": [
 		{
-			"name": "Generate token",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"user\": \"adm\",\n    \"password\": \"1234\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Autenticação",
+			"item": [
+				{
+					"name": "Generate token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const result = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"token\", result.token);"
+								],
+								"type": "text/javascript"
+							}
 						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5000/authenticate",
-					"protocol": "http",
-					"host": [
-						"localhost"
 					],
-					"port": "5000",
-					"path": [
-						"authenticate"
-					]
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user\": \"adm\",\n    \"password\": \"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Insert Product",
-			"request": {
-				"auth": {
-					"type": "apikey",
-					"apikey": [
-						{
-							"key": "value",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIwOTU1NTU2LCJleHAiOjE2MjEwNDE5NTZ9.7y4oQVcA3i0HWybN4BS4_3jqkJPMh_9ReB8knoISQjE",
-							"type": "string"
+			"name": "Produtos",
+			"item": [
+				{
+					"name": "Insert Product",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
 						},
-						{
-							"key": "key",
-							"value": "Authorization",
-							"type": "string"
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n    \"sku\": \"0001\",\n    \"name\": \"PRODUTO TESTE\",\n    \"costPrice\": 15.05,\n    \"salePrice\": 32.65,\n    \"brandId\": 2,\n    \"stock\": 20\n    }\n]\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "[{\n  \"sku\": \"0001\",\n  \"name\": \"PRODUTO TESTE\",\n  \"costPrice\": 15.05,\n  \"salePrice\": 32.65,\n  \"brandId\": 2,\n  \"stock\": 20\n},\n{\n  \"sku\": \"0002\",\n  \"name\": \"PRODUTO TESTE 2\",\n  \"costPrice\": 150.5,\n  \"salePrice\": 260.5,\n  \"brandId\": 1,\n  \"stock\": 200\n}]\n",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "Get Product",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5000/product",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"product"
+							],
+							"query": [
+								{
+									"key": "sku",
+									"value": "0002",
+									"disabled": true
+								}
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5000/product",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"product"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Get Product",
-			"request": {
-				"auth": {
-					"type": "apikey",
-					"apikey": [
-						{
-							"key": "value",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIwOTU1NTU2LCJleHAiOjE2MjEwNDE5NTZ9.7y4oQVcA3i0HWybN4BS4_3jqkJPMh_9ReB8knoISQjE",
-							"type": "string"
+			"name": "Usuários",
+			"item": [
+				{
+					"name": "Insert User",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
 						},
-						{
-							"key": "key",
-							"value": "Authorization",
-							"type": "string"
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\": \"luffy\",\n    \"password\": \"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"user"
+							]
 						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:5000/product",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"product"
-					],
-					"query": [
-						{
-							"key": "sku",
-							"value": "0002",
-							"disabled": true
-						}
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Insert User",
-			"request": {
-				"auth": {
-					"type": "apikey",
-					"apikey": [
+			"name": "Pedidos",
+			"item": [
+				{
+					"name": "Insert Order",
+					"event": [
 						{
-							"key": "value",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIwOTU1NTU2LCJleHAiOjE2MjEwNDE5NTZ9.7y4oQVcA3i0HWybN4BS4_3jqkJPMh_9ReB8knoISQjE",
-							"type": "string"
-						},
-						{
-							"key": "key",
-							"value": "Authorization",
-							"type": "string"
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"webId\", 1+Number(pm.environment.get(\"webId\")));"
+								],
+								"type": "text/javascript"
+							}
 						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"login\": \"teste\",\n    \"password\": \"teste\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5000/user",
-					"protocol": "http",
-					"host": [
-						"localhost"
 					],
-					"port": "5000",
-					"path": [
-						"user"
-					]
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"webId\": {{webId}},\n  \"amount\": 100,\n  \"channel\": 1,\n  \"products\": [\n    {\n      \"sku\": \"0001\",\n      \"price\": 100,\n      \"qtty\": 1\n    }\n  ],\n  \"payment\": {\n    \"paymentId\": 1\n  },\n  \"customer\": {\n    \"cpfCnpj\": \"12194436626\"\n  },\n  \"delivery\": {\n    \"zip\": \"30720450\",\n    \"street\": \"Itororo\",\n    \"number\": \"459\",\n    \"district\": \"Padre Eustaqui\",\n    \"state\": \"MG\",\n    \"country\": \"Brasil\",\n    \"deliveryDate\": \"2021-08-07\"\n  }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/order",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\n  \"sku\": \"0001\",\n  \"name\": \"PRODUTO TESTE\",\n  \"costPrice\": 15.05,\n  \"salePrice\": 32.65,\n  \"brandId\": 2,\n  \"stock\": 20\n},\n{\n  \"sku\": \"0002\",\n  \"name\": \"PRODUTO TESTE 2\",\n  \"costPrice\": 150.5,\n  \"salePrice\": 260.5,\n  \"brandId\": 1,\n  \"stock\": 200\n}]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5000/order",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"order"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "Get Customer",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "apikey",
-					"apikey": [
-						{
-							"key": "value",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIwOTU1NTU2LCJleHAiOjE2MjEwNDE5NTZ9.7y4oQVcA3i0HWybN4BS4_3jqkJPMh_9ReB8knoISQjE",
-							"type": "string"
+			"name": "Clientes",
+			"item": [
+				{
+					"name": "Get Customer",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
 						},
-						{
-							"key": "key",
-							"value": "Authorization",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "[{\n  \"sku\": \"0001\",\n  \"name\": \"PRODUTO TESTE\",\n  \"costPrice\": 15.05,\n  \"salePrice\": 32.65,\n  \"brandId\": 2,\n  \"stock\": 20\n},\n{\n  \"sku\": \"0002\",\n  \"name\": \"PRODUTO TESTE 2\",\n  \"costPrice\": 150.5,\n  \"salePrice\": 260.5,\n  \"brandId\": 1,\n  \"stock\": 200\n}]",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5000/customer",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"customer"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Insert Customer",
-			"request": {
-				"auth": {
-					"type": "apikey",
-					"apikey": [
-						{
-							"key": "value",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIwOTU1NTU2LCJleHAiOjE2MjEwNDE5NTZ9.7y4oQVcA3i0HWybN4BS4_3jqkJPMh_9ReB8knoISQjE",
-							"type": "string"
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\n  \"sku\": \"0001\",\n  \"name\": \"PRODUTO TESTE\",\n  \"costPrice\": 15.05,\n  \"salePrice\": 32.65,\n  \"brandId\": 2,\n  \"stock\": 20\n},\n{\n  \"sku\": \"0002\",\n  \"name\": \"PRODUTO TESTE 2\",\n  \"costPrice\": 150.5,\n  \"salePrice\": 260.5,\n  \"brandId\": 1,\n  \"stock\": 200\n}]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "key",
-							"value": "Authorization",
-							"type": "string"
+						"url": {
+							"raw": "http://localhost:5000/customer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"customer"
+							]
 						}
-					]
+					},
+					"response": []
 				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n      \"name\": \"Duarte\",\n      \"companyName\": \"\",\n      \"cpfCnpj\": \"121.944.366-26\",\n      \"rg\": \"15.205.650\",\n      \"email\": \"\",\n      \"phone\": \"\",\n      \"cell\": \"31994568745\",\n      \"brithday\": \"\",\n      \"gender\": 1,\n      \"address\": {\n        \"zip\": \"31260390\",\n        \"number\": 50,\n        \"street\": \"Rua Mirian Wanderley Lara\",\n        \"district\": \"Dona Clara\",\n        \"state\": \"MG\",\n        \"country\": \"Brasil\"\n      }\n    }",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5000/customer",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"customer"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Insert Order",
-			"request": {
-				"auth": {
-					"type": "apikey",
-					"apikey": [
-						{
-							"key": "value",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIwOTU1NTU2LCJleHAiOjE2MjEwNDE5NTZ9.7y4oQVcA3i0HWybN4BS4_3jqkJPMh_9ReB8knoISQjE",
-							"type": "string"
+				{
+					"name": "Insert Customer",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "{{token}}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
 						},
-						{
-							"key": "key",
-							"value": "Authorization",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n      \"name\": \"Duarte\",\n      \"companyName\": \"\",\n      \"cpfCnpj\": \"121.944.366-26\",\n      \"rg\": \"15.205.650\",\n      \"email\": \"\",\n      \"phone\": \"\",\n      \"cell\": \"31994568745\",\n      \"brithday\": \"\",\n      \"gender\": 1,\n      \"address\": {\n        \"zip\": \"31260390\",\n        \"number\": 50,\n        \"street\": \"Rua Mirian Wanderley Lara\",\n        \"district\": \"Dona Clara\",\n        \"state\": \"MG\",\n        \"country\": \"Brasil\"\n      }\n    }",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5000/customer",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"customer"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Get Order",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"auth": {
-					"type": "apikey",
-					"apikey": [
-						{
-							"key": "value",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIwOTU1NTU2LCJleHAiOjE2MjEwNDE5NTZ9.7y4oQVcA3i0HWybN4BS4_3jqkJPMh_9ReB8knoISQjE",
-							"type": "string"
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n      \"name\": \"Duarte\",\n      \"companyName\": \"\",\n      \"cpfCnpj\": \"121.944.366-26\",\n      \"rg\": \"15.205.650\",\n      \"email\": \"\",\n      \"phone\": \"\",\n      \"cell\": \"31994568745\",\n      \"brithday\": \"\",\n      \"gender\": 1,\n      \"address\": {\n        \"zip\": \"31260390\",\n        \"number\": 50,\n        \"street\": \"Rua Mirian Wanderley Lara\",\n        \"district\": \"Dona Clara\",\n        \"state\": \"MG\",\n        \"country\": \"Brasil\"\n      }\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "key",
-							"value": "Authorization",
-							"type": "string"
+						"url": {
+							"raw": "http://localhost:5000/customer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5000",
+							"path": [
+								"customer"
+							]
 						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "[{\n  \"sku\": \"0001\",\n  \"name\": \"PRODUTO TESTE\",\n  \"costPrice\": 15.05,\n  \"salePrice\": 32.65,\n  \"brandId\": 2,\n  \"stock\": 20\n},\n{\n  \"sku\": \"0002\",\n  \"name\": \"PRODUTO TESTE 2\",\n  \"costPrice\": 150.5,\n  \"salePrice\": 260.5,\n  \"brandId\": 1,\n  \"stock\": 200\n}]",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:5000/customer",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"customer"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }
