@@ -26,10 +26,11 @@ class UserController implements IController {
       const result = await User.post(formattedUser);
       if (result) {
         console.log("User(s) successfully registered!");
-        return res.status(200).json({ msg: "User successfully inserted!" });
+        return res.status(200).json({ msg: `User '${data.login}' successfully inserted!` });
       }
       return res.status(500).json({ msg: "Error when trying to insert user", data: formattedUser });
     } catch (err) {
+      console.log(err);
       return res.status(500).json({ msg: "Error when trying to insert user", error: err.message });
     }
   };

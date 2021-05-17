@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Customers tests beginning... should return status 200 and a object with customer 1`] = `
+Array [
+  Object {
+    "brithday": "0000-00-00",
+    "cell": "31994568745",
+    "companyName": "",
+    "cpfCnpj": "12194436626",
+    "email": "",
+    "gender": 1,
+    "id": 68,
+    "name": "Duarte",
+    "phone": "",
+    "rg": 15205650,
+  },
+]
+`;

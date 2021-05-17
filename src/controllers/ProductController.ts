@@ -37,6 +37,17 @@ class ProductController implements IController {
     }
   };
 
+  public delete = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const params = req.body;
+      if (!params.sku) return res.status(400).json({ msg: "Invalid body! 'sku' required" });
+      const product = await Product.delete(params);
+      return res.status(200).json({ msg: `Product with sku '${params.sku}' successfully deleted!` });
+    } catch (err) {
+      return res.status(500).json({ msg: "Error when trying to delete product", error: err.message });
+    }
+  };
+
   private checkProducts = async (products: IProduct[]) => {
     for (const prd of products) {
       if (!prd.sku) return Promise.reject({ msg: `Invalid product object. 'sku' required.`, data: prd });

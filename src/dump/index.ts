@@ -11,7 +11,7 @@ class Dump {
     const order =
       "CREATE TABLE `order` (" +
       "`id` int(11) NOT NULL AUTO_INCREMENT," +
-      "`idWeb` varchar(20) NOT NULL DEFAULT '0'," +
+      "`webId` varchar(20) NOT NULL DEFAULT '0'," +
       "`status` int(5) NOT NULL DEFAULT 0," +
       "`amount` double(6,3) NOT NULL DEFAULT 0," +
       "`discount` double(6,3) NOT NULL DEFAULT 0," +
@@ -22,7 +22,7 @@ class Dump {
       "`customerId` int(11) NOT NULL DEFAULT 0," +
       "PRIMARY KEY (`id`)," +
       "CONSTRAINT `fk_customerId` FOREIGN KEY (`customerId`) REFERENCES `customer`(`id`) ON DELETE CASCADE," +
-      "KEY i2(`idWeb`, `date`)," +
+      "KEY i2(`webId`, `date`)," +
       "KEY i3(`date`)," +
       "KEY i4(`status`)" +
       ") ENGINE=InnoDB DEFAULT CHARSET=latin1;";
@@ -145,7 +145,10 @@ class Dump {
       })
       .then(async () => {
         return connection.schema.hasTable("payment").then(async (exists: boolean) => {
-          if (!exists) return connection.schema.raw(payment);
+          if (!exists) {
+            await connection.schema.raw(payment);
+            return connection.insert({ name: "CARTAO" }).into("payment");
+          }
           return;
         });
       })

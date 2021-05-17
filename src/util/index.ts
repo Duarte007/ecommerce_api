@@ -4,11 +4,6 @@ class Util {
     return false;
   };
 
-  public formatDate(date: string): number {
-    if (this.isEmptyField(date)) return 0;
-    return parseInt(date.split("T")[0].split("-").join(""));
-  }
-
   public formatCnpj = (text: string): string => {
     return text.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, "$1.$2.$3/$4-$5");
   };
@@ -89,7 +84,7 @@ class Util {
   };
 
   public removeSpecialChars = (s: string) => {
-    if (s === null || s === "") {
+    if (s === "") {
       return s;
     }
     return s

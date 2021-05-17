@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Products tests beginning... should return status 200 and a object with product 1`] = `
+Array [
+  Object {
+    "brandId": 2,
+    "costPrice": 15.05,
+    "name": "PRODUTO TESTE",
+    "salePrice": 32.65,
+    "sku": "0001",
+    "stock": 20,
+  },
+]
+`;

@@ -12,7 +12,7 @@ class OrderController implements IController {
     try {
       const params = {
         id: parseInt(req.query?.id?.toString()?.replace(/[-\.]/g, "") ?? "0"),
-        idWeb: parseInt(req.query?.idWeb?.toString()?.replace(/[-\.]/g, "") ?? "0"),
+        webId: parseInt(req.query?.webId?.toString()?.replace(/[-\.]/g, "") ?? "0"),
         date: req.query?.date?.toString() || "",
         iniDate: req.query?.iniDate?.toString() || "",
         endDate: req.query?.endDate?.toString() || "",
@@ -60,15 +60,26 @@ class OrderController implements IController {
       await Order.postOrderDelivery(formattedOrderDelivery, trx);
       console.log("Order delivery information entered successfully!");
       await trx.commit();
-      return res.status(200).json({ msg: "Order successfully inserted!", data: { id: newOrder, idWeb: data.idWeb } });
+      return res.status(200).json({ msg: "Order successfully inserted!", data: { id: newOrder, webId: data.webId } });
     } catch (err) {
       if (trx) await trx.rollback();
-      return res.status(500).json({ msg: "Error when trying to insert order", error: err });
+      return res.status(500).json({ msg: err.msg || "Error when trying to insert order", error: err });
+    }
+  };
+
+  public delete = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const params = req.body;
+      if (!params.webId) return res.status(400).json({ msg: "Invalid body! 'webId' required" });
+      const order = await Order.delete(params);
+      return res.status(200).json({ msg: `Order with webId '${params.webId}' successfully deleted!` });
+    } catch (err) {
+      return res.status(500).json({ msg: "Error when trying to delete order", error: err.message });
     }
   };
 
   private checkOrder = async (order: any) => {
-    if (order.hasOwnProperty && !order.hasOwnProperty("idWeb")) return Promise.reject({ msg: "Invalid body. 'idWeb' required." });
+    if (order.hasOwnProperty && !order.hasOwnProperty("webId")) return Promise.reject({ msg: "Invalid body. 'webId' required." });
     if (!order.hasOwnProperty("amount")) return Promise.reject({ msg: "Invalid body. 'amount' required.", data: order });
     if (!order.hasOwnProperty("channel")) return Promise.reject({ msg: "Invalid body. 'channel' required.", data: order });
     if (!order.hasOwnProperty("products")) return Promise.reject({ msg: "Invalid body. 'products' required.", data: order });
@@ -78,13 +89,13 @@ class OrderController implements IController {
       return Promise.reject({ msg: "Invalid body. 'products.price' required.", data: order });
     if (!order.products[0].hasOwnProperty("qtty"))
       return Promise.reject({ msg: "Invalid body. 'products.qtty' required.", data: order });
-    if (!order.hasOwnProperty("customer")) return Promise.reject({ msg: "Invalid body. 'products' required.", data: order });
+    if (!order.hasOwnProperty("customer")) return Promise.reject({ msg: "Invalid body. 'customer' required.", data: order });
     if (!order.customer.hasOwnProperty("cpfCnpj"))
       return Promise.reject({ msg: "Invalid body. 'customer.cpfCnpj' required.", data: order });
-    if (!order.hasOwnProperty("payment")) return Promise.reject({ msg: "Invalid body. 'products' required.", data: order });
+    if (!order.hasOwnProperty("payment")) return Promise.reject({ msg: "Invalid body. 'payment' required.", data: order });
     if (!order.payment.hasOwnProperty("paymentId"))
       return Promise.reject({ msg: "Invalid body. 'payment.paymentId' required.", data: order });
-    if (!order.hasOwnProperty("delivery")) return Promise.reject({ msg: "Invalid body. 'products' required.", data: order });
+    if (!order.hasOwnProperty("delivery")) return Promise.reject({ msg: "Invalid body. 'delivery' required.", data: order });
     if (!order.delivery.hasOwnProperty("deliveryDate"))
       return Promise.reject({ msg: "Invalid body. 'delivery.deliveryDate' required.", data: order });
     if (!order.delivery.hasOwnProperty("zip"))
@@ -95,8 +106,8 @@ class OrderController implements IController {
       return Promise.reject({ msg: "Invalid body. 'delivery.number' required.", data: order });
     if (!order.delivery.hasOwnProperty("district"))
       return Promise.reject({ msg: "Invalid body. 'delivery.district' required.", data: order });
-    const response = await Order.get({ idWeb: order.idWeb });
-    if (response.length) return Promise.reject({ msg: `Order with 'idWeb' ${order.idWeb} already exists`, data: order });
+    const response = await Order.get({ webId: order.webId });
+    if (response.length) return Promise.reject({ msg: `Order with 'webId' ${order.webId} already exists`, data: order });
   };
 }
 

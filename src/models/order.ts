@@ -6,7 +6,7 @@ class Order {
     return connection
       .select(
         "order.id",
-        "order.idWeb",
+        "order.webId",
         "order.status",
         "order.amount",
         "order.discount",
@@ -45,8 +45,8 @@ class Order {
         if (data.id) {
           builder.where("id", data.id);
         }
-        if (data.idWeb) {
-          builder.where("idWeb", data.idWeb);
+        if (data.webId) {
+          builder.where("webId", data.webId);
         }
         if (data.date) {
           builder.where("date", data.date);
@@ -127,6 +127,21 @@ class Order {
       .catch((err) => {
         console.log(err);
         return Promise.reject({ msg: "Error when entering order delivery address data.", err });
+      });
+  };
+
+  public delete = (data: IOrderParams): Promise<number> => {
+    return connection("order")
+      .where((builder: Knex.QueryBuilder): any => {
+        builder.where("webId", data.webId);
+        if (data.id) {
+          builder.where("id", data.id);
+        }
+      })
+      .del()
+      .catch((err) => {
+        console.log(err);
+        return Promise.reject("Error to delete order");
       });
   };
 }

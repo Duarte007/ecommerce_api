@@ -15,18 +15,22 @@ routes.post("/ping", (req, res) => {
 
 routes.post("/authenticate", AuthMiddleware.generateToken);
 
+routes.post("/user", UserController.post);
+
 routes.use(AuthMiddleware.verifyMiddleware);
 
 routes.post("/order", OrderController.post);
 routes.get("/order", OrderController.get);
+routes.delete("/order", OrderController.delete);
 
 routes.post("/product", ProductController.post);
 routes.get("/product", ProductController.get);
+routes.delete("/product", ProductController.delete);
 
 routes.post("/customer", CustomerController.post);
 routes.get("/customer", CustomerController.get);
+routes.delete("/customer", CustomerController.delete);
 
-routes.post("/user", UserController.post);
 // routes.get("/user", UserController.get);
 
 export default routes;

@@ -4,7 +4,7 @@ import Product from "../models/product";
 class OrderTransformation {
   public getOrderObject = (data: any): IOrder => {
     return {
-      idWeb: data.idWeb,
+      webId: data.webId,
       status: data.status,
       amount: data.amount,
       discount: data.discount,

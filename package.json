@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon src/index.ts --signal SIGTERM",
     "build": "tsc --build",
+    "pretest": "export NODE_ENV=test",
     "test": "jest -u -i",
+    "posttest": "unset NODE_ENV",
     "lint": "eslint \"**/*.ts\" --ignore-pattern node_modules/ --fix"
   },
   "author": "",
@@ -24,6 +26,7 @@
     "knex-paginate": "^2.1.0",
     "moment-timezone": "^0.5.33",
     "mysql": "^2.18.1",
+    "node-schedule": "^2.0.0",
     "prettier": "^2.3.0",
     "supertest": "^6.1.3",
     "typescript": "^4.2.4"
@@ -33,11 +36,13 @@
     "@types/express": "^4.17.11",
     "@types/express-rate-limit": "^5.1.1",
     "@types/helmet": "^4.0.0",
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^26.0.22",
     "@types/jsonwebtoken": "^8.5.1",
     "@types/knex": "^0.16.1",
     "@types/moment-timezone": "^0.5.30",
     "@types/node": "^15.0.3",
+    "@types/node-schedule": "^1.3.1",
+    "@types/supertest": "^2.0.11",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
     "eslint-config-standard": "^13.0.1",
@@ -48,7 +53,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "nodemon": "^2.0.7",
     "sucrase": "^3.18.1",
-    "ts-jest": "^26.5.6",
+    "ts-jest": "^26.5.4",
     "ts-mixins": "^1.0.0",
     "ts-node": "^9.1.1"
   }

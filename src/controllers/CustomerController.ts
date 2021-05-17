@@ -37,7 +37,18 @@ class CustomerController implements IController {
         msg: "Error when trying to insert customer",
       });
     } catch (err) {
-      return res.status(500).json({ err });
+      return res.status(500).json({ msg: err.msg || "Error when trying to insert customer", err });
+    }
+  };
+
+  public delete = async (req: Request, res: Response): Promise<Response> => {
+    try {
+      const params = req.body;
+      if (!params.cpfCnpj) return res.status(400).json({ msg: "Invalid body! 'cpfCnpj' required" });
+      const customer = await Customer.delete(params);
+      return res.status(200).json({ msg: `Customer successfully deleted!` });
+    } catch (err) {
+      return res.status(500).json({ msg: "Error when trying to delete customer", error: err.message });
     }
   };
 

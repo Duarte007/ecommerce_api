@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Orders tests beginning... should return status 200 and a object with order 1`] = `
+Array [
+  Object {
+    "amount": 100,
+    "brandId": 2,
+    "cell": "31994568745",
+    "channel": 1,
+    "country": "Brasil",
+    "cpfCnpj": "12194436626",
+    "customerId": 67,
+    "customerName": "Duarte",
+    "date": null,
+    "deliveryDate": "2021-08-07T03:00:00.000Z",
+    "discount": 0,
+    "district": "Padre Eustaquio",
+    "email": "",
+    "freight": 0,
+    "id": 38,
+    "installments": 1,
+    "number": 459,
+    "paymentId": 1,
+    "price": 100,
+    "productName": "PRODUTO TESTE",
+    "qtty": 1,
+    "remarks": "",
+    "sku": "0001",
+    "state": "MG",
+    "status": 0,
+    "street": "Itororo",
+    "webId": "69489014",
+    "zip": 30720450,
+  },
+]
+`;

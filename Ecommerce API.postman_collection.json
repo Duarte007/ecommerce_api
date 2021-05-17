@@ -1,0 +1,342 @@
+{
+	"info": {
+		"_postman_id": "a4eeb32a-e8cb-465d-a784-ec605f0c5dda",
+		"name": "Ecommerce API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Generate token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user\": \"adm\",\n    \"password\": \"1234\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Product",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIwOTU1NTU2LCJleHAiOjE2MjEwNDE5NTZ9.7y4oQVcA3i0HWybN4BS4_3jqkJPMh_9ReB8knoISQjE",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n  \"sku\": \"0001\",\n  \"name\": \"PRODUTO TESTE\",\n  \"costPrice\": 15.05,\n  \"salePrice\": 32.65,\n  \"brandId\": 2,\n  \"stock\": 20\n},\n{\n  \"sku\": \"0002\",\n  \"name\": \"PRODUTO TESTE 2\",\n  \"costPrice\": 150.5,\n  \"salePrice\": 260.5,\n  \"brandId\": 1,\n  \"stock\": 200\n}]\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIwOTU1NTU2LCJleHAiOjE2MjEwNDE5NTZ9.7y4oQVcA3i0HWybN4BS4_3jqkJPMh_9ReB8knoISQjE",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/product",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"product"
+					],
+					"query": [
+						{
+							"key": "sku",
+							"value": "0002",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert User",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIwOTU1NTU2LCJleHAiOjE2MjEwNDE5NTZ9.7y4oQVcA3i0HWybN4BS4_3jqkJPMh_9ReB8knoISQjE",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"login\": \"teste\",\n    \"password\": \"teste\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Customer",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIwOTU1NTU2LCJleHAiOjE2MjEwNDE5NTZ9.7y4oQVcA3i0HWybN4BS4_3jqkJPMh_9ReB8knoISQjE",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n  \"sku\": \"0001\",\n  \"name\": \"PRODUTO TESTE\",\n  \"costPrice\": 15.05,\n  \"salePrice\": 32.65,\n  \"brandId\": 2,\n  \"stock\": 20\n},\n{\n  \"sku\": \"0002\",\n  \"name\": \"PRODUTO TESTE 2\",\n  \"costPrice\": 150.5,\n  \"salePrice\": 260.5,\n  \"brandId\": 1,\n  \"stock\": 200\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/customer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"customer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Customer",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIwOTU1NTU2LCJleHAiOjE2MjEwNDE5NTZ9.7y4oQVcA3i0HWybN4BS4_3jqkJPMh_9ReB8knoISQjE",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"name\": \"Duarte\",\n      \"companyName\": \"\",\n      \"cpfCnpj\": \"121.944.366-26\",\n      \"rg\": \"15.205.650\",\n      \"email\": \"\",\n      \"phone\": \"\",\n      \"cell\": \"31994568745\",\n      \"brithday\": \"\",\n      \"gender\": 1,\n      \"address\": {\n        \"zip\": \"31260390\",\n        \"number\": 50,\n        \"street\": \"Rua Mirian Wanderley Lara\",\n        \"district\": \"Dona Clara\",\n        \"state\": \"MG\",\n        \"country\": \"Brasil\"\n      }\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/customer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"customer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Order",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIwOTU1NTU2LCJleHAiOjE2MjEwNDE5NTZ9.7y4oQVcA3i0HWybN4BS4_3jqkJPMh_9ReB8knoISQjE",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n      \"name\": \"Duarte\",\n      \"companyName\": \"\",\n      \"cpfCnpj\": \"121.944.366-26\",\n      \"rg\": \"15.205.650\",\n      \"email\": \"\",\n      \"phone\": \"\",\n      \"cell\": \"31994568745\",\n      \"brithday\": \"\",\n      \"gender\": 1,\n      \"address\": {\n        \"zip\": \"31260390\",\n        \"number\": 50,\n        \"street\": \"Rua Mirian Wanderley Lara\",\n        \"district\": \"Dona Clara\",\n        \"state\": \"MG\",\n        \"country\": \"Brasil\"\n      }\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/customer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"customer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Order",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIwOTU1NTU2LCJleHAiOjE2MjEwNDE5NTZ9.7y4oQVcA3i0HWybN4BS4_3jqkJPMh_9ReB8knoISQjE",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n  \"sku\": \"0001\",\n  \"name\": \"PRODUTO TESTE\",\n  \"costPrice\": 15.05,\n  \"salePrice\": 32.65,\n  \"brandId\": 2,\n  \"stock\": 20\n},\n{\n  \"sku\": \"0002\",\n  \"name\": \"PRODUTO TESTE 2\",\n  \"costPrice\": 150.5,\n  \"salePrice\": 260.5,\n  \"brandId\": 1,\n  \"stock\": 200\n}]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/customer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"customer"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

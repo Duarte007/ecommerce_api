@@ -44,6 +44,18 @@ class Product {
       .then((response: { id: number }[]) => response[0]?.id)
       .catch((err) => Promise.reject({ err }));
   };
+
+  public delete = (data: IProductParams): Promise<number> => {
+    return connection("product")
+      .where((builder: Knex.QueryBuilder): any => {
+        builder.where("sku", data.sku);
+      })
+      .del()
+      .catch((err) => {
+        console.log(err);
+        return Promise.reject("Error to delete product");
+      });
+  };
 }
 
 export default new Product();

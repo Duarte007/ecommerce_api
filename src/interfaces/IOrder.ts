@@ -1,6 +1,6 @@
 export interface IOrderParams {
   id?: number;
-  idWeb?: number;
+  webId?: number;
   date?: string;
   iniDate?: string;
   endDate?: string;
@@ -9,7 +9,7 @@ export interface IOrderParams {
 
 export interface IOrder {
   id?: number;
-  idWeb: number;
+  webId: number;
   status: number;
   amount: number;
   discount: number;

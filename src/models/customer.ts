@@ -81,6 +81,29 @@ class Customer {
       .then((response: { id: number }[]) => response[0]?.id)
       .catch((err) => Promise.reject({ err }));
   };
+
+  public delete = (data: ICustomerParams): Promise<number> => {
+    return connection("customer")
+      .where((builder: Knex.QueryBuilder): any => {
+        if (data.name) {
+          builder.where("name", data.name);
+        }
+        if (data.cpfCnpj) {
+          builder.where("cpfCnpj", Util.removeNonDigit(data.cpfCnpj));
+        }
+        if (data.rg) {
+          builder.where("rg", data.rg);
+        }
+        if (data.id) {
+          builder.where("id", data.id);
+        }
+      })
+      .del()
+      .catch((err) => {
+        console.log(err);
+        return Promise.reject("Error to delete customer");
+      });
+  };
 }
 
 export default new Customer();
