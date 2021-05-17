@@ -5,7 +5,7 @@ import { getToken } from "../jestUtils";
 let token = "";
 const product = [
   {
-    sku: "0001",
+    sku: String(~~(Math.random() * 99999999)),
     name: "PRODUTO TESTE",
     costPrice: 15.05,
     salePrice: 32.65,
@@ -85,7 +85,7 @@ describe("Products tests beginning...", (): void => {
   });
 
   it("should return status 200 and a object with product", async (done): Promise<void> => {
-    const sku = "0001";
+    const sku = product[0].sku;
 
     const response = await request(App).get(`/product?sku=${sku}`).set("Authorization", token);
 
@@ -104,7 +104,7 @@ describe("Products tests beginning...", (): void => {
   });
 
   it("should return status 200 and remove product", async (done): Promise<void> => {
-    const sku = "0001";
+    const sku = product[0].sku;
 
     const response = await request(App).delete(`/product`).send({ sku }).set("Authorization", token);
 
